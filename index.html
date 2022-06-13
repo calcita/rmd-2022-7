@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R + Markdown: automatización desde   un mail a una tesis         </title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Richard Detomasi y Gabriela Mathieu " />
+    <script src="index_files/header-attrs-2.14/header-attrs.js"></script>
+    <link href="index_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="index_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="index_files/remark-css-0.0.1/rladies-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# R + Markdown: automatización desde <br> un mail a una tesis<br><br> <img src="img_git/Rlogo.png" style="width:8.0%" />   <img src="img_git/RStudio-Logo-Flat.png" style="width:18.0%" />   <img src="img_git/rmarkdown.png" style="width:6.0%" />
+]
+.author[
+### Richard Detomasi y Gabriela Mathieu<br>
+]
+.date[
+### <span>&lt;style=‘font-size: 80%;’&gt; FCS - Educación Permanente <br> Taller intro: git <br><br>
+</style>
+</span> <img src="img_git/cc-by-sa.png" />
+]
+
+---
+
+
+
+
+
+
+
+
+
+# ¿Qué es el software de control de versiones?
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;git&lt;/span&gt; es un software de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;control de versiones&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Un software de control de versiones te permite llevar un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;control de los cambios&lt;/span&gt; en tus archivos.
+&lt;br&gt;&lt;br&gt;
+--
+
+- El control de versiones está diseñado para gestionar el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;código fuente&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Funciona mejor cuando se hace un seguimiento de los archivos almacenados como &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;texto plano&lt;/span&gt; (ej. txt) y no codificados como binarios (ej. documentos de Word).
+&lt;br&gt;&lt;br&gt;
+--
+
+- Facilita las &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;colaboraciones&lt;/span&gt; de otras personas
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Experimentar&lt;/span&gt; con el código y las funciones sin romper el proyecto principal
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Etiquetar versiones&lt;/span&gt; concretas para poder volver a ellas fácilmente
+&lt;br&gt;&lt;br&gt;
+--
+
+- Un programa de control de versiones mantiene una copia de los cambios. Esto es útil en caso de que necesitemos revertir algún cambio realizado.  
+
+
+---
+# ¿Por qué usar un software de control de versiones?
+
+Probablemente ya has implementado un control de versiones en algún proyecto...
+
+Algo así rudimentario y caótico.
+
+&lt;img src="img_git/tesis.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+Con git tendríamos uno solo de estos odt.
+
+---
+# ¿Es como Dropbox o Google Docs?
+
+
+&lt;!-- **NO! Mejor!** --&gt;
+&lt;center&gt;
+&lt;img src="https://media.giphy.com/media/ALWsTtMzfjai4/source.gif"/&gt;
+&lt;/center&gt;
+
+
+Git no es un repositorio para tus archivos
+
+---
+# Historial de versiones
+
+- Si usamos una plataforma como &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Dropbox&lt;/span&gt; contamos con un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;historial de archivos&lt;/span&gt; en caso de necesitarlo. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- O con Google Docs tenemos la opción de "version history" que viene a ser algo similar. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Una ventaja de Google Docs respecto a Dropbox es que permite editar un mismo documento por varias personas a la vez.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Pero ninguno de estos métodos de control de versiones es lo suficientemente eficiente para almacenar y rastrear los cambios en el código.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Por ello, existen &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;programas específicos&lt;/span&gt; para el control de versiones, uno de los más populares es &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;git&lt;/span&gt;. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- La gran &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ventaja de git&lt;/span&gt; es &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;cómo gestiona los archivos&lt;/span&gt;. Los cambios no se almacenan al hacer "save" sino que es necesario hacer un "commit". Este commit refleja los cambios, la fecha en que se hizo y un mensaje sobre lo que se hizo.
+
+[Link](https://michaelstepner.com/blog/git-vs-dropbox/)
+
+---
+# Gestión de los cambios en los archivos
+
+- En vez de tener un historial de archivos, git guarda un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;historial de versiones&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+- Cada versión tiene una &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;etiqueta&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;fecha&lt;/span&gt; de creación y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;mensaje&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+- Se pueden fácilmente &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;comparar los cambios&lt;/span&gt; entre una versión y la anterior: 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Por ej., en el archivo combina.R podemos ver en verde las líneas agregadas y en rojo las quitadas.
+
+![](img_git/verde-rojo.png)
+
+---
+# Motivación para usar git
+
+
+- Es de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;open source&lt;/span&gt; y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;gratuito&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+- Permite la gestión de cambios en documentos, código, etc.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Facilita el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;trabajo colaborativo&lt;/span&gt; y simultáneo sin preocuparnos que alguien borre algo.
+&lt;br&gt;&lt;br&gt;
+--
+
+- La posibilidad de reportar errores (bugs) o sugerir nuevos aportes (features) a proyectos.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Regresar a &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;versiones previas&lt;/span&gt;, si encontrás errores o borrás accidentalmente algo.  
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Ver los cambios&lt;/span&gt; entre diferentes versiones de tu código, análisis o texto.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Compartir tus &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;paquetes de R&lt;/span&gt; e instalar los que se encuentran en desarrollo.
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;RStudio&lt;/span&gt; integra soporte para git por lo que se simplifica su uso.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Comunmente se utiliza con un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;web service&lt;/span&gt; que aloja remotamente una copia de los archivos. Dos de los más utilizados son GitHub y Gitlab. 
+
+
+&lt;img src="https://media.giphy.com/media/kH6CqYiquZawmU1HI6/giphy.gif" width="10%" /&gt;
+
+---
+# git no es Gitlab
+
+- Hagamos una analogía entre git y el e-mail. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;E-mail&lt;/span&gt; es un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;protocolo para enviar mensajes online&lt;/span&gt;, independientemente de cual servidor de e-mail uses (gmail, hotmail, adinet, etc.).
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Git&lt;/span&gt; es un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;protocolo para compartir versiones de tu código&lt;/span&gt;, independientemente de cual servidor git uses (github, gitlab, bitbucket).
+&lt;br&gt;&lt;br&gt;
+--
+
+- Así &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;gitlab.com&lt;/span&gt; es a git lo que &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;gmail.com&lt;/span&gt; es al e-mail.
+&lt;br&gt;&lt;br&gt;
+--
+
+- [GitLab](https://about.gitlab.com/) es un webservice que te permite almacenar proyectos en un repositorio remoto gratuitamente. Tiene una interfaz amigable con varios agregados (lista de issues, wikis).
+&lt;br&gt;&lt;br&gt;
+--
+
+- Otros servicios similares son [GitHub](https://github.com/) o [bitbucket](https://bitbucket.org/). No todos tienen las mismas condiciones de servicios y están van cambiando. 
+
+---
+# Esquema de funcionamiento 
+
+![](img_git/remote.png)
+
+---
+# Qué necesitamos para usar git y gitlab
+
+&lt;!-- - No es un repositorio para tus archivos --&gt;
+
+1) registrarse en gitlab.com
+&lt;br&gt;&lt;br&gt;
+--
+
+2) instalar git en la computadora
+&lt;br&gt;&lt;br&gt;
+--
+
+3) configurar RStudio
+&lt;br&gt;&lt;br&gt;
+--
+
+Esto último porque vamos a usar git/gitlab para gestionar código R.
+
+---
+# Registrarse en gitlab
+
+Vamos al siguiente [link](https://gitlab.com)
+
+![](img_git/creatagitlabaccount.gif)
+
+
+---
+# Instalar git
+
+Descargamos el [instalador de git para windows](http://git-scm.com/download/win) y lo ejecutamos.
+
+
+
+&lt;img src="https://media.giphy.com/media/l1J9qemh1La8b0Rag/giphy.gif" width="50%" /&gt;
+
+
+
+
+---
+# Verificar instalación de git (ejecutar en Terminal)
+
+.left-column[
+
+- RStudio proporciona acceso a la terminal del sistema operativo.
+&lt;br&gt;&lt;br&gt;
+- El \$ es a la terminal lo que el prompt es a la consola de R.
+]
+
+.right-column[
+```git
+    git --version
+```
+
+&lt;img src="img_git/git_version.gif" width="60%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# Pasos para configurar git en Rstudio
+
+1. Consultar en la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Terminal&lt;/span&gt; donde está el ejecutable de git en la computadora.
+
+ - Windows: escribir `where git` y apretar enter. La ruta será algo como:  `C:/Program Files (x86)/bin/git.exe`
+ - Linux/Mac: escribir `which git` + ENTER. La ruta será algo como: `/usr/bin/git`
+&lt;br&gt;&lt;br&gt;
+--
+
+2. Abrir RStudio e ir a &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Tools &amp;gt; Global Options&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+3. Hacer click en &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Git/SVN&lt;/span&gt; 
+&lt;br&gt;&lt;br&gt;
+--
+
+4. completar con la ruta de git 
+&lt;br&gt;&lt;br&gt;
+--
+
+5. **Seleccionar** &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Enable version control interface for RStudio projects&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+6. Reiniciar RStudio y verificar el ícono de Git en la barra de herramientas superior.
+
+
+---
+# Pasos para configurar git en Rstudio
+
+&lt;img src="img_git/git_ejecutable.gif" width="80%" style="display: block; margin: auto;" /&gt;
+
+&lt;!-- ![](img_git/git_ejecutable.gif) --&gt;
+
+---
+# Conectar gitlab con git (desde la terminal)
+
+- Proporcionar el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;nombre de usuarie&lt;/span&gt; y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;e-mail&lt;/span&gt; de nuestra cuenta de gitlab.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Estos comandos que escribimos no son comandos de R sino que serán interpretados por nuestro sistema operativo para configurar git.
+
+```git
+    git config --global user.name "tu usuarie"
+    git config --global user.email "tumail@dominio.com"
+```
+&lt;br&gt;&lt;br&gt;
+--
+
+- El paquete de R *usethis* permite configurar git desde la consola de R sin pasar por la terminal de sistema.
+
+---
+# Conectar gitlab con git (desde la terminal)
+
+&lt;img src="img_git/gitconfigrstudio.gif" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Flujo de trabajo
+
+1. Creamos un repositorio (proyecto) en GitLab
+&lt;br&gt;
+--
+
+
+2. Creamos un Rproj y elegimos una carpeta en la compu para **clonar** el repo localmente
+&lt;br&gt;
+--
+
+
+3. &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Creas o modificas un archivo&lt;/span&gt; en tu directorio de trabajo (esa carpeta)
+&lt;br&gt;
+--
+
+
+4. &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Confirmas los cambios &lt;/span&gt; en la **Staging Area** (add).
+&lt;br&gt;
+--
+
+
+5. Hacemos &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;commit&lt;/span&gt; de esos cambios que quedan en el repositorio local (directorio Git), junto con un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;mensaje&lt;/span&gt; que indica lo que se ha hecho con el archivo.
+&lt;br&gt;
+--
+
+
+6. Enviamos los cambios (commits) a GitLab haciendo &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;push&lt;/span&gt;.
+&lt;br&gt;
+--
+
+
+
+- Los pasos 1 y 2 se realizan una única vez. Los pasos 3 a 5 ocurren en tu computadora. Si estás trabajando con alguien más o usás más de una computadora, deberás descargar los cambios que hayan sido por esa otra persona desde GitLab haciendo pull.
+
+
+7- Descargas localmente los cambios registrados remotamente haciendo &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;pull&lt;/span&gt;.
+
+
+---
+# Flujo de trabajo
+
+![Fuente: https://intro2r.com/use-git.html](img_git/workflow_git.png)
+*Fuente: https://intro2r.com/use-git.html*
+
+
+- Necesitamos familizarnos con esta nomenclatura en inglés para el correcto uso de estas herramientas.
+
+
+- No solemos alojar bases en GitLab por su peso y además git no es bueno versionando este tipo de archivos.
+
+
+---
+# Terminología
+
+- El  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Working Directory&lt;/span&gt; (directorio de trabajo) es donde tus archivos están en tu computadora local.
+&lt;br&gt;&lt;br&gt;
+--
+
+- El  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Local Repository&lt;/span&gt; (repositorio local) es un subdirectorio del WD que reside en .git/. Es una carpeta oculta con toda la información necesaria para llevar el control de versiones.
+&lt;br&gt;&lt;br&gt;
+--
+
+- El  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Staging Area&lt;/span&gt; (área de ensayo) o Index se encuentra dentro del repositorio local 
+&lt;br&gt;&lt;br&gt;
+--
+
+- El  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Remote Repository&lt;/span&gt; (repositorio remoto) está alojado en gitlab.com.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Para ver qué hay en la carpeta git puede mostrar las carpetas ocultas de tu directorio de trabajo o escribir en la terminal lo siguiente:
+
+```git
+cd .git 
+ls -a
+```
+
+---
+# Ejercicio
+
+1. **En tu cuenta de GitLab crea un nuevo proyecto**
+&lt;br&gt;&lt;br&gt;
+--
+
+2. Dale al nuevo repositorio un nombre corto y descriptivo
+&lt;br&gt;&lt;br&gt;
+--
+
+3. Describe el proyecto
+&lt;br&gt;&lt;br&gt;
+--
+
+4. Selecciona la opción Private o Public según te parezca
+&lt;br&gt;&lt;br&gt;
+--
+
+5. Selecciona la opción inicializar el repositorio con un README   
+ 
+
+_En github los proyectos se llaman repositorios, vamos a llamarles así para no confundir con los proyectos de R (.Rproj)_
+
+
+---
+# Creamos un repositorio (proyecto) en gitlab 
+
+![](img_git/createagitlabproject.gif)
+
+---
+# Clonar el repositorio en RStudio con Git 
+
+1. Copiar la ruta (HTTPS url) del repositorio al clickear el botón _Clone or download_. 
+ La ruta será algo similar a `https://gitlab.com/username/nombre_repo.git`. 
+&lt;br&gt;&lt;br&gt;
+--
+
+2. En RStudio Selecciona _File &gt; New Project.._
+&lt;br&gt;&lt;br&gt;
+--
+
+3. En _Version Control_, selecciona la opción _Git_
+ Estás creando un nuevo proyecto (.Rproj) en RStudio con control de versiones Git.
+&lt;br&gt;&lt;br&gt;
+--
+
+4. Pega la ruta HTTPS del repository, selecciona la carpeta del espacio de trabajo de R y crea el proyecto.
+&lt;br&gt;&lt;br&gt;
+--
+
+- RStudio entonces copia (clona) el contenido del repositorio a la carpeta del proyecto. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- El contenido del repositorio GitLab ahora debería aparecer en el panel Archivos de RStudio y debería ver allí el `README.md` creado.
+
+---
+# Clonar el repositorio en RStudio con Git 
+
+![](img_git/clone.gif)
+
+
+&lt;!-- ![GitHub: Create a new repository](imagenes/GitHub-create-repo.png)  --&gt;
+
+
+---
+# Add + Commit + Push
+
+- Para enviar los cambios que realizamos localmente primero debemos &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;seleccionar los archivos&lt;/span&gt; modificados, creados o eliminados,
+&lt;br&gt;&lt;br&gt;
+--
+
+- Luego hacer &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;commit&lt;/span&gt; para lo cual es necesario escribir un mensaje que describa los cambios que realizamos. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Para que un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;mensaje del commit&lt;/span&gt; nos resulte útil debe describir brevemente lo que hicimos y no haber hecho muchas cosas antes de hacer un commit. Podemos volver a una versión anterior del código y para saber a cuál resulta muy útil ese mensaje.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Luego de hacer uno o varios commits debemos enviar los cambios al repositorio remoto: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;presionar el botón push&lt;/span&gt; e ingresar los datos solicitados. 
+
+---
+# Ejemplo: Add + Commit + Push
+
+&lt;img src="img_git/commitandpush.gif" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Estado de archivos
+
+
+.pull-left[
+
+- Cada archivo tiene un estatus específico que va cambiando en el tiempo.
+&lt;br&gt;&lt;br&gt;
+- En la pestaña Git, al lado del nombre  de un archivo hay un recuadro de color con una letra o signo.
+
+![](img_git/git_pestaña.png)
+ 
+ ]
+ .pull-right[
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #fec44f !important;" &gt;?&lt;/span&gt; **Untracked**: son los archivos nuevos previo a clickear en Staged.
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #99d8c9 !important;" &gt;A&lt;/span&gt; **Added**: son los archivos nuevos que comienzar a ser rastreados
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #3182bd !important;" &gt;M&lt;/span&gt; **Modified**: un archivo que fue modificado
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #810f7c !important;" &gt;R&lt;/span&gt; **Renamed**: un archivo que fue renombrado
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b30000 !important;" &gt;D&lt;/span&gt; **Deleted**: un archivo que fue eliminado
+
+En la columna _Staged_ se seleccionan las casillas de los archivos que queramos hacer _commit_. 
+El panel inferior muestra las ediciones en verde y rojo del archivo.
+ ]
+
+---
+# Cambios en gitlab luego del push
+
+&lt;img src="img_git/f5.gif" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Diferencias entre versiones
+
+&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #99d8c9 !important;" &gt;Additions&lt;/span&gt; 
+&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b30000 !important;" &gt;Deletions&lt;/span&gt;
+
+&lt;img src="img_git/commitdif.gif" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+# Pull
+
+Descargar los cambios que otra persona o yo misma desde otra computadora realicé.
+
+&lt;img src="img_git/pull.gif" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# gitignore
+
+- gitignore es un archivo de texto que le dice a Git qué archivos o carpetas ignorar en un proyecto. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Estos archivos no serán enviados al repositorio remoto.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Conviene ignorar información sensible (contraseñas). Ver RStudioAPI y Keyring para gestionar contraseñas.
+&lt;br&gt;&lt;br&gt;
+--
+
+- También archivos binarios. Git funciona muy bien con archivos de texto (cualquier tipo de texto), pero no con archivos binarios como .Rdata.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Ignorar archivos de más de 50MB. Git está hecho específicamente para el código (por ejemplo, .R).
+
+&lt;!-- cómo usar git https://intro2r.com/use-git.html --&gt;
+
+&lt;!-- - Las entradas de este archivo también pueden seguir un patrón coincidente. El asterisco se utiliza como una coincidencia comodín.  --&gt;
+&lt;!-- --     --&gt;
+
+---
+# Branches
+
+.pull-left[
+- Al hacer el primer commit en un nuevo repositorio se crea automáticamente la rama main.
+&lt;br&gt;&lt;br&gt;
+- La rama "main", es la rama por defecto (hasta [2020](https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main) se llamaba "master"). 
+&lt;br&gt;&lt;br&gt;
+- Las ramas se utilizan para hacer desarrollos aislados de la rama principal.
+&lt;br&gt;&lt;br&gt;
+- Luego pueden combinarse (merge). 
+
+]
+
+.pull-right[
+![](img_git/branch.png)
+*Fuente: https://bit.ly/3erssIf*
+
+]
+
+&lt;!-- https://aberdeenstudygroup.github.io/studyGroup/lessons/SG-T1-GitHubVersionControl/VersionControl/ --&gt;
+&lt;!-- https://intro2r.com/use-git.html --&gt;
+&lt;!-- https://carpentries-incubator.github.io/git-Rstudio-course/04-history/index.html --&gt;
+
+---
+# Ejercicio
+
+1. Clona el repositorio creado en GitLab en tu computadora.
+
+2. Agregar un script de R (el ejercicio 1 por ejemplo) que incluya un comentario y código.
+
+3. Envía los cambios al repositorio remoto.
+
+4. Comprueba que efectivamente quedaron los cambios en el repositorio remoto.
+
+5. Edita el README del proyecto (en GitLab).
+
+6. Descarga localmente los cambios hechos remotamente.
+
+
+---
+# Materiales para profundizar el tema
+
+- [Happy Git and GitHub for the useR. Jenny Bryan &amp; Jim Hester.](https://happygitwithr.com/)
+&lt;br&gt;&lt;br&gt;
+--
+
+- [R Packages: Git and GitHub](https://r-pkgs.org/git.html)
+&lt;br&gt;&lt;br&gt;
+--
+
+- [Version Control with Git and SVN. RStudio](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN)
+&lt;br&gt;&lt;br&gt;
+--
+
+- [Git book](https://git-scm.com/book/en/v2)
+&lt;br&gt;&lt;br&gt;
+--
+
+- [GitHub Glossary](https://help.github.com/articles/github-glossary/)
+&lt;br&gt;&lt;br&gt;
+--
+
+- [Control de versiones](https://calcita.github.io/R-tutorial/control-de-versiones.html)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
